@@ -2,15 +2,16 @@
 using System.Collections;
 using NAudio; 
 
-public class AudioMain : MonoBehaviour {
+/*
+*
+* Audio parser util
+*
+*/
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+public static class AudioMain
+{
+    public static void OpenFile(string _Path)
+    {
+        // todo copypastor
+    }
 }
