@@ -1,7 +1,10 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections;
-using NAudio;
 using System.IO;
+using NAudio;
+using NAudio.Wave;
+using System.Threading;
 
 /*
 *
@@ -24,11 +27,11 @@ public static class AudioMain
         switch (extension)
         { 
             case "wav":
-                NAudio.Wave.WaveFormatConversionStream.CreatePcmStream(new NAudio.Wave.WaveFileReader(WavFilePath));
+                NAudio.Wave.WaveFormatConversionStream.CreatePcmStream(new NAudio.Wave.WaveFileReader(_Path));
                 break;
 
             case "mp3":
-                pcm = NAudio.Wave.WaveFormatConversionStream.CreatePcmStream(new NAudio.Wave.Mp3FileReader(mp3FilePath));
+                pcm = NAudio.Wave.WaveFormatConversionStream.CreatePcmStream(new NAudio.Wave.Mp3FileReader(_Path));
                 break;
 
             default:
@@ -112,7 +115,7 @@ public static class AudioMain
         var waveFormat = new WaveFormat(8000, 16, 1); // todo check
         using (WaveFileWriter writer = new WaveFileWriter(filePath, waveFormat))
         {
-            writer.WriteData(pcm, 0, pcm.Length);
+            writer.Write(pcm, 0, pcm.Length);
         }
     }
 
