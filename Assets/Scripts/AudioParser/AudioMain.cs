@@ -2,9 +2,10 @@
 using System;
 using System.Collections;
 using System.IO;
+using System.Threading;
+
 using NAudio;
 using NAudio.Wave;
-using System.Threading;
 
 /*
 *
@@ -138,7 +139,7 @@ public static class AudioMain
          * 
          */
 
-        throw new NotImplementedException();
+        //throw new NotImplementedException();
 
         return pcm;
     }
