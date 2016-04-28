@@ -1,33 +1,28 @@
 ﻿using System;
 using UnityEngine;
 
-namespace DenisVizigin.Sound
+namespace SpaceBeat.Sound
 {
     public class MusicAnalyzer
     {
 		private float _thresholdMultiplier;
-
         private double[] _threshold;
-
-        private double[] _peaks;
-		
-        private SoundParser _soundParser;
-		
+        private double[] _peaks;		
+        private SoundParser _soundParser;		
 		private double _sumOfFluxThresholds;
-
 		private int _thresholdSize;
 
-		/// <summary>
-		/// Initializes a new instance of the <see cref="DenisVizigin.Sound.MusicAnalyzer"/> class.
-		/// MusicAnalyzer creates array of 3d track heights (0..1) analizing sound parameters. 
-		/// </summary>
-		/// <param name="sound">Main audioClip object for analyzing soundwave</param>
-		/// <param name="sampleSize">Size of block in samples (can be 1024, 2048, 4096 etc.)</param>
-		/// <param name="soundFeed">How many blocks analyzed in one Update's method call</param>
-		/// <param name="beatSensitivity">Beat sensitivity of Beat Detector</param>
-		/// <param name="thresholdSize">Threshold size</param>
-		/// <param name="thresholdMultiplier">Threshold multiplier</param>
-		public MusicAnalyzer(AudioClip sound, 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SpaceBeat.Sound.MusicAnalyzer"/> class.
+        /// MusicAnalyzer creates array of 3d track heights (0..1) analizing sound parameters. 
+        /// </summary>
+        /// <param name="sound">Main audioClip object for analyzing soundwave</param>
+        /// <param name="sampleSize">Size of block in samples (can be 1024, 2048, 4096 etc.)</param>
+        /// <param name="soundFeed">How many blocks analyzed in one Update's method call</param>
+        /// <param name="beatSensitivity">Beat sensitivity of Beat Detector</param>
+        /// <param name="thresholdSize">Threshold size</param>
+        /// <param name="thresholdMultiplier">Threshold multiplier</param>
+        public MusicAnalyzer(AudioClip sound, 
 		                     int sampleSize = 1024, 
 		                     int soundFeed = 40,
 		                     int beatSubbands = 3, 
@@ -154,11 +149,8 @@ namespace DenisVizigin.Sound
 		}
 
         public double[] Thresholds { get { return _threshold; } }
-
         public double[] Peaks { get { return _peaks; } }
-
         public double[,] Beats { get { return _soundParser.Beats; } }
-
         public double SpeedFactor { get { return _threshold.Length / _sumOfFluxThresholds; } }
     }
 }

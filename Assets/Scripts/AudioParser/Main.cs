@@ -1,63 +1,52 @@
-﻿using System;
-using DenisVizigin.Objects3D;
+﻿using SpaceBeat.Objects3D;
 using UnityEngine;
 
-namespace DenisVizigin.Sound 
+namespace SpaceBeat.Sound
 {
-	public class Main : MonoBehaviour
+    public class Main : MonoBehaviour
 	{
-		public double RadiansToDegrees = 57.29577951308232;
+        //
+        // Config
+        //
 
+		public double RadiansToDegrees  = 57.29577951308232;
 		public double CameraRotationEasing = 0.08;
-
 		public double PlayerMovingEasing = 0.1;
-
-		public float thresholdMultiplier = 1.5f;
-		
-		public int thresholdSize = -1;
-		
-		public double beatSensitivity = 1.5;
-		
+		public float thresholdMultiplier = 1.5f;		
+		public int thresholdSize = -1;		
+		public double beatSensitivity = 1.5;		
 		public int beatSubbands = 3;
-
-		public int sampleSize = 1024;
-		
+		public int sampleSize = 1024;		
 		public int soundFeed = 100;
-
 		public int trackWidth = 1000;
-
 		public int trackHeight = 100;
-
 		public int trackDepth = 10000;
-
 		public int cameraDistanceY = 300;
-
 		public int cameraDistanceZ = 300;
-		//---
+		
+        //
+        // Members
+        //
 	    
 		private MusicAnalyzer analyzer;
-
-		private AudioSource audio; 
-
-		private double targetPlayerZ = 0.0;
-		
+        private new AudioSource audio;
+        private double targetPlayerZ = 0.0;		
 		private double playerZ = 0.0;
-
 		private int lastSample = 0;
-
 	    private bool isAnalyzed = false;
 
 	    void Start()
 	    {
 	    	audio = GetComponent<Camera>().GetComponent<AudioSource>();
-	        analyzer = new MusicAnalyzer(GetComponent<Camera>().GetComponent<AudioSource>().clip,
-			                             sampleSize, 
-			                             soundFeed,
-			                             beatSubbands, 
-			                             beatSensitivity, 
-			                             thresholdSize, 
-			                             thresholdMultiplier
-			                             );
+	        analyzer = new MusicAnalyzer(
+                GetComponent<Camera>().GetComponent<AudioSource>().clip,
+			    sampleSize, 
+			    soundFeed,
+			    beatSubbands, 
+			    beatSensitivity, 
+			    thresholdSize, 
+			    thresholdMultiplier
+              );
 	    }
 
 	    void Update()
@@ -97,7 +86,7 @@ namespace DenisVizigin.Sound
 					-trackWidth / 2, 
 					(float)((analyzer.Thresholds[c] +  (d - c) * diff) * trackDepth + cameraDistanceY), 
 					-(float)(playerZ + cameraDistanceZ)
-					);
+			       );
 			}
 		}
 

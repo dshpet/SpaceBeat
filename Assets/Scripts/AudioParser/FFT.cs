@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-namespace DenisVizigin.Sound
+namespace SpaceBeat.Sound
 {
     /**
      * Performs an in-place complex FFT.
@@ -60,7 +57,8 @@ namespace DenisVizigin.Sound
          * @param   logN    Log2 of FFT length. e.g. for 512 pt FFT, logN = 9.
          */
         public void init(
-            uint logN )
+            uint logN 
+          )
         {
             m_logN = logN;
             m_N = (uint)(1 << (int)m_logN);
@@ -89,7 +87,8 @@ namespace DenisVizigin.Sound
         public void run(
             double[] xRe,
             double[] xIm,
-            bool inverse = false )
+            bool inverse = false 
+          )
         {
             uint numFlies = m_N >> 1; // Number of butterflies per sub-FFT
             uint span = m_N >> 1;     // Width of the butterfly
@@ -194,7 +193,8 @@ namespace DenisVizigin.Sound
          */
         private uint BitReverse(
             uint x,
-            uint numBits)
+            uint numBits
+          )
         {
             uint y = 0;
             for (uint i = 0; i < numBits; i++)
