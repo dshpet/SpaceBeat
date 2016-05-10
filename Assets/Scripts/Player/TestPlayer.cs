@@ -1,46 +1,112 @@
 ﻿using UnityEngine;
-using System.Collections;
 
-public class TestPlayer : MonoBehaviour {
+using SpaceBeat.Sound;
+using SpaceBeat.Objects3D;
 
-    public float speed = 10.0F;
-    public float rotationSpeed = 100.0F;
+public class TestPlayer : MonoBehaviour
+{
+  //
+  // Config
+  //
 
-    // Use this for initialization
-    void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update ()
+  public float speed = 10.0F;
+  public float rotationSpeed = 100.0F;
+
+  // analyzer params
+  public int    sampleSize          = 1024;
+  public int    soundFeed           = 100;
+  public int    beatSubbands        = 30;
+  public double beatSensitivity     = 1.5;
+  public int    thresholdSize       = -1;
+  public float  thresholdMultiplier = 1.5f;
+
+  //
+  // Members
+  //
+
+  private MusicAnalyzer analyzer;
+  private new AudioSource audio;
+
+  private int lastTime;
+  private int verticalDirection;
+
+  //
+  // Functions
+  //
+
+  // Use this for initialization
+  void Start()
+  {
+    verticalDirection = 1;
+    lastTime = 0;
+
+    audio = GetComponent<AudioSource>();
+    audio.Stop();
+
+    analyzer = new MusicAnalyzer(
+        audio.clip,
+        sampleSize,
+        soundFeed,
+        beatSubbands,
+        beatSensitivity,
+        thresholdSize,
+        thresholdMultiplier
+      );
+    
+    // todo make loading screen or progress bar and wrap calls once per update
+    while (!analyzer.Analyze())
+      ;
+
+    // debug
+    var beats = analyzer.Beats;
+    var detectedBeats = analyzer._soundParser.DetectedBeats;
+    var thresholds = analyzer.Thresholds;
+
+    audio.Play();
+  }
+
+  // Update is called once per frame
+  void Update()
+  {
+    audio.Pause();
+
+    var time = audio.timeSamples / sampleSize;
+    //var delta = Mathf.Max(0, time - lastTime);
+
+    //var beats = analyzer.Beats;
+    var thresholds = analyzer.Thresholds;
+    var peaks = analyzer.Peaks;
+    var speedFactor = analyzer.SpeedFactor;
+
+    var detectedBeats = analyzer._soundParser.DetectedBeats;
+    for (var i = lastTime; i <= time; i++) // todo count first and then change one time
+      transform.Translate(0, verticalDirection * (float) (peaks[i] > 0 ? 1 :  0), (float) (detectedBeats[i] * speedFactor * Time.deltaTime));
+
+    verticalDirection = -verticalDirection;
+    /*
+    for (int i = 0; i < beatSubbands; i++)
     {
-        var spectrum = new float[1024];
-        AudioListener.GetSpectrumData(spectrum, 0, FFTWindow.Hamming);
+      var b = beats[time, i];
 
-        float influence = 0;
-        for (int i = 0; i < spectrum.Length; i++)
-        {
-            if (i < spectrum.Length / 3)
-                influence += spectrum[i] * 0.5f;
-            else
-            if (i >= spectrum.Length / 3 && i <= spectrum.Length * 2 / 3)
-                influence += spectrum[i] * 0.3f;
-            else
-            if (i > spectrum.Length * 2 / 3)
-                influence += spectrum[i] * 0.2f;
-        }
+      if (b != 0)
+      {
+        transform.Translate(0, 0, (float)b * 50 * Time.deltaTime);
+        Debug.Log("!!BEAT");
+        return;
+      }
 
-        /*
-        var c1 = spectrum[2] + spectrum[3] + spectrum[4];
-        var c3 = spectrum[11] + spectrum[12] + spectrum[13];
-        var c4 = spectrum[22] + spectrum[23] + spectrum[24];
-        var c5 = spectrum[44] + spectrum[45] + spectrum[46] + spectrum[47] + spectrum[48] + spectrum[49];
-
-        Debug.Log("C1 = " + c1);
-        var influence = (float) (c1 * 0.1 + c3 * 0.3 + c4 * 0.5 + c5 * 0.1);
-        */
-
-        transform.Translate(0, 0, influence * 50 * Time.deltaTime);
-        //transform.Rotate(0, rotationSpeed * Time.deltaTime, 0);
     }
+    */
+
+    lastTime = time;
+
+    //Debug.Log(
+    //  time + 
+    //  " beats [" + beats[time, 0] + ", " + beats[time, 1] + ", " + beats[time, 2] + "\n" +
+    //  " thresholds " + thresholds[time] + "\n" +
+    //  " peaks " + peaks[time] + "\n"
+    //  );
+
+    audio.UnPause();
+  }
 }

@@ -369,7 +369,7 @@ AudioListener:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1260795784}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!124 &1260795788
 Behaviour:
   m_ObjectHideFlags: 0
@@ -521,6 +521,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 10
   rotationSpeed: 1000
+  sampleSize: 1024
+  soundFeed: 100
+  beatSubbands: 30
+  beatSensitivity: 1.5
+  thresholdSize: -1
+  thresholdMultiplier: 1.5
 --- !u!82 &1495458486
 AudioSource:
   m_ObjectHideFlags: 0
@@ -530,7 +536,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: a1e9cb9eb297f364a998c1e126f2ea39, type: 3}
+  m_audioClip: {fileID: 8300000, guid: ca3722343d329c641917ea09a7d84c83, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
