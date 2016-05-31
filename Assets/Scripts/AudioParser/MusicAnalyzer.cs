@@ -6,13 +6,13 @@ namespace SpaceBeat.Sound
 {
   public class MusicAnalyzer
   {
-    public SoundParser _soundParser;
+    public SoundParser m_soundParser;
 
-    private float    _thresholdMultiplier;
-    private double[] _threshold;
-    private double[] _peaks;
-    private double   _sumOfFluxThresholds;
-    private int      _thresholdSize;
+    private float    m_thresholdMultiplier;
+    private double[] m_threshold;
+    private double[] m_peaks;
+    private double   m_sumOfFluxThresholds;
+    private int      m_thresholdSize;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="SpaceBeat.Sound.MusicAnalyzer"/> class.
@@ -21,6 +21,7 @@ namespace SpaceBeat.Sound
     /// <param name="sound">Main audioClip object for analyzing soundwave</param>
     /// <param name="sampleSize">Size of block in samples (can be 1024, 2048, 4096 etc.)</param>
     /// <param name="soundFeed">How many blocks analyzed in one Update's method call</param>
+    /// <param name="beatSubbands">"How many spectrum divisions are made</param>
     /// <param name="beatSensitivity">Beat sensitivity of Beat Detector</param>
     /// <param name="thresholdSize">Threshold size</param>
     /// <param name="thresholdMultiplier">Threshold multiplier</param>
@@ -30,29 +31,30 @@ namespace SpaceBeat.Sound
         int soundFeed = 40,
         int beatSubbands = 3,
         double beatSensitivity = 1.5,
-        int thresholdSize = -1,
+        int thresholdSize = -1, // TODO TWEAK THIS
         float thresholdMultiplier = 1.5f
       )
     {
-      _thresholdMultiplier = thresholdMultiplier;
-      
-      // THRESHOLD WINDOW SIZE (if -1 then autoSize)
-      _thresholdSize = (thresholdSize < 0) ? (int)(3 * sound.length) : thresholdSize;
+      m_thresholdMultiplier = thresholdMultiplier;
 
-      _soundParser = new SoundParser(sound, sampleSize, soundFeed, beatSubbands, beatSensitivity);
-      _threshold = new double[_soundParser.TotalSamples];
-      _peaks = new double[_soundParser.TotalSamples];
+      // THRESHOLD WINDOW SIZE (if -1 then autoSize)
+      //throw new NotImplementedException(); // holy cow
+      m_thresholdSize = (thresholdSize < 0) ? (int)(3 * sound.length) : thresholdSize; // FUCKS SAKE NO
+
+      m_soundParser = new SoundParser(sound, sampleSize, soundFeed, beatSubbands, beatSensitivity);
+      m_threshold = new double[m_soundParser.TotalSamples];
+      m_peaks = new double[m_soundParser.TotalSamples];
     }
 
     /// <summary>
     /// Analyze method calls when MonoBehaviour calls Update method.
-    /// It call main Parse method of the _soundParser object. After parse
+    /// It call main Parse method of the m_soundParser object. After parse
     /// MusicAnalyzer calculate FluxThresholds, smooth it by Kalman's filter
     /// and convert in 1..0 representation.
     /// </summary>
     public bool Analyze()
     {
-      if (_soundParser.Parse())
+      if (m_soundParser.Parse())
       {
         CalculateFluxThresholds();
         CalculateKalmanFilter();
@@ -63,7 +65,7 @@ namespace SpaceBeat.Sound
         return true;
       }
 
-      Debug.Log("Parsed " + 100 * Math.Round(_soundParser.ParseSampleCount / (float)_soundParser.TotalSamples, 2) + "% of sound");
+      Debug.Log("Parsed " + 100 * Math.Round(m_soundParser.ParseSampleCount / (float)m_soundParser.TotalSamples, 2) + "% of sound");
 
       return false;
     }
@@ -73,18 +75,18 @@ namespace SpaceBeat.Sound
     /// </summary>
     private void CalculateFluxThresholds()
     {
-      for (int i = 0; i < _soundParser.TotalSamples; i++)
+      for (int i = 0; i < m_soundParser.TotalSamples; i++)
       {
-        int start = Math.Max(0, i - _thresholdSize / 2);
-        int end   = Math.Min(_soundParser.SpectralFlux.Length - 1, i + _thresholdSize / 2);
+        int start = Math.Max(0, i - m_thresholdSize / 2);
+        int end   = Math.Min(m_soundParser.SpectralFlux.Length - 1, i + m_thresholdSize / 2);
 
         double mean = 0;
         for (int j = start; j <= end; j++)
-          mean += _soundParser.SpectralFlux[j];
+          mean += m_soundParser.SpectralFlux[j];
 
         mean /= (end - start);
 
-        _threshold[i] = mean * _thresholdMultiplier;
+        m_threshold[i] = mean * m_thresholdMultiplier;
       }
     }
 
@@ -93,12 +95,12 @@ namespace SpaceBeat.Sound
     /// </summary>
     private void DetectPeaks()
     {
-      double[] prunnedSpectralFlux = new double[_threshold.Length];
+      double[] prunnedSpectralFlux = new double[m_threshold.Length];
 
-      for (int i = 0; i < _threshold.Length; i++)
+      for (int i = 0; i < m_threshold.Length; i++)
       {
-        if (_threshold[i] <= _soundParser.SpectralFlux[i])
-          prunnedSpectralFlux[i] = _soundParser.SpectralFlux[i] - _threshold[i];
+        if (m_threshold[i] <= m_soundParser.SpectralFlux[i])
+          prunnedSpectralFlux[i] = m_soundParser.SpectralFlux[i] - m_threshold[i];
         else
           prunnedSpectralFlux[i] = 0;
       }
@@ -106,14 +108,14 @@ namespace SpaceBeat.Sound
       for (int i = 0; i < prunnedSpectralFlux.Length - 1; i++)
       {
         if (prunnedSpectralFlux[i] > prunnedSpectralFlux[i + 1])
-          _peaks[i] = prunnedSpectralFlux[i];
+          m_peaks[i] = prunnedSpectralFlux[i];
         else
-          _peaks[i] = 0;
+          m_peaks[i] = 0;
       }
     }
 
     /// <summary>
-    /// Kalman's filter for smoothing xy function. For our case filter will smooth flux thresholds function.
+    /// Kalman's filter for smoothing xy function. In this case filter will smooth flux thresholds function.
     /// More: http://en.wikipedia.org/wiki/Kalman_filter
     /// </summary>
     /// <param name="q">Measurement noise</param>
@@ -122,17 +124,17 @@ namespace SpaceBeat.Sound
     /// <param name="h">Factor of measured value to real value</param>
     private void CalculateKalmanFilter(double q = .35, double r = 35, double f = 1, double h = 1)
     {
-      double state = _threshold[0];
+      double state = m_threshold[0];
       double covariance = .1;
 
-      for (int i = 0; i < _threshold.Length; i++)
+      for (int i = 0; i < m_threshold.Length; i++)
       {
         double x0 = f * state;
         double p0 = f * covariance * f + q;
         double k = h * p0 / (h * p0 * h + r);
-        state = x0 + k * (_threshold[i] - h * x0);
+        state = x0 + k * (m_threshold[i] - h * x0);
         covariance = (1 - k * h) * p0;
-        _threshold[i] = state;
+        m_threshold[i] = state;
       }
     }
 
@@ -141,23 +143,23 @@ namespace SpaceBeat.Sound
     /// </summary>
     private void ConvertPercents()
     {
-      double maxFlux = _threshold.Max();
+      double maxFlux = m_threshold.Max();
 
-      for (int i = 0; i < _threshold.Length; i++)
-        _threshold[i] = _threshold[i] / maxFlux;
+      for (int i = 0; i < m_threshold.Length; i++)
+        m_threshold[i] = m_threshold[i] / maxFlux;
     }
 
     private void CalculateSumOfThresholds()
     {
-      _sumOfFluxThresholds = 0;
+      m_sumOfFluxThresholds = 0;
 
-      for (int i = 0; i < _threshold.Length; i++)
-        _sumOfFluxThresholds += _threshold[i];
+      for (int i = 0; i < m_threshold.Length; i++)
+        m_sumOfFluxThresholds += m_threshold[i];
     }
 
-    public double[] Thresholds { get { return _threshold; } }
-    public double[] Peaks { get { return _peaks; } }
-    public double[,] Beats { get { return _soundParser.Beats; } }
-    public double SpeedFactor { get { return _threshold.Length / _sumOfFluxThresholds; } }
+    public double[] Thresholds { get { return m_threshold; } }
+    public double[] Peaks { get { return m_peaks; } }
+    public double[,] Beats { get { return m_soundParser.Beats; } }
+    public double SpeedFactor { get { return m_threshold.Length / m_sumOfFluxThresholds; } }
   }
 }

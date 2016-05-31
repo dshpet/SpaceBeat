@@ -9,25 +9,25 @@ namespace SpaceBeat.Sound
   {
     public int HistoryBuffer = 44;
 
-    private double[] _FFTBytes;
-    private double[] _lastFFTBytes;
+    private double[] m_FFTBytes;
+    private double[] m_lastFFTBytes;
 
-    private int[] _detectedBeats;
-    private double[] _spectralFlux;
-    private double[] _rawBytes;
-    private double[,] _beats;
+    private int[] m_detectedBeats;
+    private double[] m_spectralFlux;
+    private double[] m_rawBytes;
+    private double[,] m_beats;
 
-    private List<List<double>> _energyHistoryBuffer;
+    private List<List<double>> m_energyHistoryBuffer;
 
-    private AudioClip _sound;
-    private int _totalSamples;
-    private int _totalBeats = 0;
-    private int _parseSampleCount = 0;
+    private AudioClip m_sound;
+    private int m_totalSamples;
+    private int m_totalBeats = 0;
+    private int m_parseSampleCount = 0;
 
-    private double _beatSensitivity;
-    private int _beatSubbands;
-    private int _sampleSize;
-    private int _soundFeed;
+    private double m_beatSensitivity;
+    private int m_beatSubbands;
+    private int m_sampleSize;
+    private int m_soundFeed;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="SpaceBeat.Sound.SoundParser"/> class.
@@ -44,22 +44,22 @@ namespace SpaceBeat.Sound
         double beatSensitivity
       )
     {
-      _sound = sound;
-      _soundFeed = soundFeed;
-      _sampleSize = sampleSize;
-      _beatSubbands = beatSubbands;
-      _beatSensitivity = beatSensitivity;
+      m_sound = sound;
+      m_soundFeed = soundFeed;
+      m_sampleSize = sampleSize;
+      m_beatSubbands = beatSubbands;
+      m_beatSensitivity = beatSensitivity;
 
-      _totalSamples = (int)(sound.samples / _sampleSize);
-      _rawBytes = new double[_sampleSize];
-      _FFTBytes = new double[_sampleSize / 2];
-      _lastFFTBytes = new double[_sampleSize / 2];
+      m_totalSamples = (int)(sound.samples / m_sampleSize);
+      m_rawBytes = new double[m_sampleSize];
+      m_FFTBytes = new double[m_sampleSize / 2];
+      m_lastFFTBytes = new double[m_sampleSize / 2];
 
-      _spectralFlux = new double[TotalSamples];
+      m_spectralFlux = new double[TotalSamples];
 
-      _beats = new double[TotalSamples, beatSubbands];
-      _detectedBeats = new int[TotalSamples];
-      _energyHistoryBuffer = new List<List<double>>();
+      m_beats = new double[TotalSamples, beatSubbands];
+      m_detectedBeats = new int[TotalSamples];
+      m_energyHistoryBuffer = new List<List<double>>();
     }
 
     /// <summary>
@@ -68,18 +68,18 @@ namespace SpaceBeat.Sound
     /// </summary>
     public bool Parse()
     {
-      if (_parseSampleCount >= TotalSamples)
+      if (m_parseSampleCount >= TotalSamples)
         return true;
 
-      for (int j = 0; j < _soundFeed; j++)
+      for (int j = 0; j < m_soundFeed; j++)
       {
-        if (_parseSampleCount + j >= TotalSamples)
+        if (m_parseSampleCount + j >= TotalSamples)
           break;
 
-        WriteData(_parseSampleCount + j);
+        WriteData(m_parseSampleCount + j);
       }
 
-      _parseSampleCount = (_parseSampleCount + _soundFeed > TotalSamples) ? TotalSamples : _parseSampleCount + _soundFeed;
+      m_parseSampleCount = (m_parseSampleCount + m_soundFeed > TotalSamples) ? TotalSamples : m_parseSampleCount + m_soundFeed;
       return false;
     }
 
@@ -95,20 +95,20 @@ namespace SpaceBeat.Sound
     private void WriteData(int currentSample)
     {
       // get raw pcm
-      int startPosition = currentSample * _sampleSize;
-      float[] samples = new float[_sampleSize * _sound.channels];
-      _sound.GetData(samples, startPosition);
+      int startPosition = currentSample * m_sampleSize;
+      float[] samples = new float[m_sampleSize * m_sound.channels];
+      m_sound.GetData(samples, startPosition);
 
       // mono / multichannel
-      if (_sound.channels == 1)
+      if (m_sound.channels == 1)
       {
         for (int i = 0; i < samples.Length; i++)
-          _rawBytes[i] = samples[i];
+          m_rawBytes[i] = samples[i];
       }
       else
       {
         for (int i = 0; i < samples.Length; i = i + 2)
-          _rawBytes[i / 2] = .5 * (samples[i] + samples[i + 1]);
+          m_rawBytes[i / 2] = .5 * (samples[i] + samples[i + 1]);
       }
 
       // smooth signal to achieve better results
@@ -117,14 +117,14 @@ namespace SpaceBeat.Sound
       // transform
       RunFFT(10, false);
 
-      _spectralFlux[currentSample] = (currentSample < 1) ? 0 : CalculateSpectralFlux();
+      m_spectralFlux[currentSample] = (currentSample < 1) ? 0 : CalculateSpectralFlux();
 
       // beats
       CalculateBeats(currentSample);
 
       // Just copy built-in arrays
-      for (int i = 0; i < _FFTBytes.Length; i++)
-        _lastFFTBytes[i] = _FFTBytes[i];
+      for (int i = 0; i < m_FFTBytes.Length; i++)
+        m_lastFFTBytes[i] = m_FFTBytes[i];
     }
 
     /// <summary>
@@ -258,8 +258,8 @@ namespace SpaceBeat.Sound
     /// </summary>
     private void RunHammingWindow()
     {
-      for (int i = 0; i < _rawBytes.Length; i++)
-        _rawBytes[i] = (0.54 + 0.46 * Math.Cos(2 * Math.PI * i / _rawBytes.Length)) * _rawBytes[i];
+      for (int i = 0; i < m_rawBytes.Length; i++)
+        m_rawBytes[i] = (0.54 + 0.46 * Math.Cos(2 * Math.PI * i / m_rawBytes.Length)) * m_rawBytes[i];
     }
 
     /// <summary>
@@ -269,12 +269,12 @@ namespace SpaceBeat.Sound
     /// <param name="inverse">If set to <c>true</c> inverse.</param>
     private void RunFFT(uint logN, bool inverse = false)
     {
-      double[] re = new double[_rawBytes.Length];
-      double[] im = new double[_rawBytes.Length];
+      double[] re = new double[m_rawBytes.Length];
+      double[] im = new double[m_rawBytes.Length];
 
-      for (int j = 0; j < _rawBytes.Length; j++)
+      for (int j = 0; j < m_rawBytes.Length; j++)
       {
-        re[j] = _rawBytes[j];
+        re[j] = m_rawBytes[j];
         im[j] = 0;
       }
 
@@ -282,8 +282,8 @@ namespace SpaceBeat.Sound
       fft.init(logN);
       fft.run(re, im, inverse);
 
-      for (int i = 0; i < _FFTBytes.Length; i++)
-        _FFTBytes[i] = Math.Sqrt(re[i] * re[i] + im[i] * im[i]);
+      for (int i = 0; i < m_FFTBytes.Length; i++)
+        m_FFTBytes[i] = Math.Sqrt(re[i] * re[i] + im[i] * im[i]);
     }
 
     /// <summary>
@@ -295,9 +295,9 @@ namespace SpaceBeat.Sound
       double diff = 0;
       double flux = 0;
 
-      for (int i = 0; i < _FFTBytes.Length; i++)
+      for (int i = 0; i < m_FFTBytes.Length; i++)
       {
-        diff = _FFTBytes[i] - _lastFFTBytes[i];
+        diff = m_FFTBytes[i] - m_lastFFTBytes[i];
         flux += Math.Max(0, diff); // diff < 0? 0 : diff;
       }
 
@@ -313,40 +313,40 @@ namespace SpaceBeat.Sound
     /// <param name="currentSample">Current analyzing sample</param>
     private void CalculateBeats(int currentSample)
     {
-      double[] es = new double[_beatSubbands];
+      double[] es = new double[m_beatSubbands];
       int detectedBeats = 0;
       int i = 0;
 
       // init beats on the line (zero = no beats)
-      for (i = 0; i < _beatSubbands; i++)
+      for (i = 0; i < m_beatSubbands; i++)
       {
-        _detectedBeats[currentSample] = 0;
-        _beats[currentSample, i] = es[i] = 0.0;
+        m_detectedBeats[currentSample] = 0;
+        m_beats[currentSample, i] = es[i] = 0.0;
       }
 
       // divide all bytes into _beatSubbands parts
-      for (i = 0; i < _FFTBytes.Length; i++)
+      for (i = 0; i < m_FFTBytes.Length; i++)
       {
-        float subbandsDivision = _FFTBytes.Length / (float)_beatSubbands;
+        float subbandsDivision = m_FFTBytes.Length / (float)m_beatSubbands;
         int byteToSubband = (int)(i / subbandsDivision);
-        es[byteToSubband] += _FFTBytes[i];
+        es[byteToSubband] += m_FFTBytes[i];
       }
 
       if (currentSample % HistoryBuffer == 0)
       {
-        if (_energyHistoryBuffer.Count == HistoryBuffer)
+        if (m_energyHistoryBuffer.Count == HistoryBuffer)
         {
           for (i = 0; i < es.Length; i++)
           {
-            if (es[i] > _beatSensitivity * ComputeAverageHistoryEnergy(i))
+            if (es[i] > m_beatSensitivity * ComputeAverageHistoryEnergy(i))
             {
-              _beats[currentSample, i] = es[i];
-              _totalBeats++;
+              m_beats[currentSample, i] = es[i];
+              m_totalBeats++;
               detectedBeats++;
             }
           }
 
-          _detectedBeats[currentSample] = detectedBeats;
+          m_detectedBeats[currentSample] = detectedBeats;
         }
       }
 
@@ -362,10 +362,10 @@ namespace SpaceBeat.Sound
     {
       double averageEnergy = 0;
 
-      for (int i = 0; i < _energyHistoryBuffer.Count; i++)
-        averageEnergy += _energyHistoryBuffer[i][subband];
+      for (int i = 0; i < m_energyHistoryBuffer.Count; i++)
+        averageEnergy += m_energyHistoryBuffer[i][subband];
 
-      return averageEnergy / _energyHistoryBuffer.Count;
+      return averageEnergy / m_energyHistoryBuffer.Count;
     }
 
     /// <summary>
@@ -374,26 +374,26 @@ namespace SpaceBeat.Sound
     /// <param name="es">Energy value</param>
     private void AddHistoryEnergy(double[] es)
     {
-      if (_energyHistoryBuffer.Count >= HistoryBuffer)
-        _energyHistoryBuffer.RemoveAt(0);
+      if (m_energyHistoryBuffer.Count >= HistoryBuffer)
+        m_energyHistoryBuffer.RemoveAt(0);
 
       for (int i = 0; i < es.Length; i++)
       {
-        if (i == 0) _energyHistoryBuffer.Add(new List<double>(_beatSubbands));
-        _energyHistoryBuffer[_energyHistoryBuffer.Count - 1].Add(es[i]);
+        if (i == 0) m_energyHistoryBuffer.Add(new List<double>(m_beatSubbands));
+        m_energyHistoryBuffer[m_energyHistoryBuffer.Count - 1].Add(es[i]);
       }
     }
 
-    public int ParseSampleCount { get { return _parseSampleCount; } }
+    public int ParseSampleCount { get { return m_parseSampleCount; } }
 
-    public int TotalSamples { get { return _totalSamples; } }
+    public int TotalSamples { get { return m_totalSamples; } }
 
-    public double[] SpectralFlux { get { return _spectralFlux; } }
+    public double[] SpectralFlux { get { return m_spectralFlux; } }
 
-    public double[,] Beats { get { return _beats; } }
+    public double[,] Beats { get { return m_beats; } }
 
-    public int[] DetectedBeats { get { return _detectedBeats; } }
+    public int[] DetectedBeats { get { return m_detectedBeats; } }
 
-    public int TotalBeats { get { return _totalBeats; } }
+    public int TotalBeats { get { return m_totalBeats; } }
   }
 }

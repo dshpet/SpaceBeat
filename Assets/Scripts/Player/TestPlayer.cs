@@ -17,7 +17,7 @@ public class TestPlayer : MonoBehaviour
   public int    soundFeed           = 100;
   public int    beatSubbands        = 30;
   public double beatSensitivity     = 1.5;
-  public int    thresholdSize       = -1;
+  public int    thresholdSize       = 20;
   public float  thresholdMultiplier = 1.5f;
 
   //
@@ -59,7 +59,7 @@ public class TestPlayer : MonoBehaviour
 
     // debug
     var beats = analyzer.Beats;
-    var detectedBeats = analyzer._soundParser.DetectedBeats;
+    var detectedBeats = analyzer.m_soundParser.DetectedBeats;
     var thresholds = analyzer.Thresholds;
 
     audio.Play();
@@ -78,7 +78,7 @@ public class TestPlayer : MonoBehaviour
     var peaks = analyzer.Peaks;
     var speedFactor = analyzer.SpeedFactor;
 
-    var detectedBeats = analyzer._soundParser.DetectedBeats;
+    var detectedBeats = analyzer.m_soundParser.DetectedBeats;
     for (var i = lastTime; i <= time; i++) // todo count first and then change one time
       transform.Translate(0, verticalDirection * (float) (peaks[i] > 0 ? 1 :  0), (float) (detectedBeats[i] * speedFactor * Time.deltaTime));
 
