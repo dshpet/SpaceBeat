@@ -31,15 +31,13 @@ namespace SpaceBeat.Sound
         int soundFeed = 40,
         int beatSubbands = 3,
         double beatSensitivity = 1.5,
-        int thresholdSize = -1, // TODO TWEAK THIS
+        int thresholdSize = -1,
         float thresholdMultiplier = 1.5f
       )
     {
       m_thresholdMultiplier = thresholdMultiplier;
 
-      // THRESHOLD WINDOW SIZE (if -1 then autoSize)
-      //throw new NotImplementedException(); // holy cow
-      m_thresholdSize = (thresholdSize < 0) ? (int)(3 * sound.length) : thresholdSize; // FUCKS SAKE NO
+      m_thresholdSize = (thresholdSize < 0) ? (int)(sound.length / 100) : thresholdSize;
 
       m_soundParser = new SoundParser(sound, sampleSize, soundFeed, beatSubbands, beatSensitivity);
       m_threshold = new double[m_soundParser.TotalSamples];
@@ -59,7 +57,7 @@ namespace SpaceBeat.Sound
         CalculateFluxThresholds();
         CalculateKalmanFilter();
         DetectPeaks();
-        ConvertPercents();
+        ConvertToPercents();
         CalculateSumOfThresholds();
 
         return true;
@@ -98,12 +96,7 @@ namespace SpaceBeat.Sound
       double[] prunnedSpectralFlux = new double[m_threshold.Length];
 
       for (int i = 0; i < m_threshold.Length; i++)
-      {
-        if (m_threshold[i] <= m_soundParser.SpectralFlux[i])
-          prunnedSpectralFlux[i] = m_soundParser.SpectralFlux[i] - m_threshold[i];
-        else
-          prunnedSpectralFlux[i] = 0;
-      }
+        prunnedSpectralFlux[i] = Math.Max(0, m_soundParser.SpectralFlux[i] - m_threshold[i]);
 
       for (int i = 0; i < prunnedSpectralFlux.Length - 1; i++)
       {
@@ -141,7 +134,7 @@ namespace SpaceBeat.Sound
     /// <summary>
     /// Convert all flux thresholds values into 0..1 representation.
     /// </summary>
-    private void ConvertPercents()
+    private void ConvertToPercents()
     {
       double maxFlux = m_threshold.Max();
 

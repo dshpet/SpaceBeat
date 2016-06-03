@@ -289,7 +289,7 @@ namespace SpaceBeat.Sound
     /// <summary>
     /// Calculates the spectral flux
     /// </summary>
-    /// <returns>The spectral flux</returns>
+    /// <returns>The spectral flux of current window</returns>
     private double CalculateSpectralFlux()
     {
       double diff = 0;
@@ -298,7 +298,7 @@ namespace SpaceBeat.Sound
       for (int i = 0; i < m_FFTBytes.Length; i++)
       {
         diff = m_FFTBytes[i] - m_lastFFTBytes[i];
-        flux += Math.Max(0, diff); // diff < 0? 0 : diff;
+        flux += Math.Max(0, diff);
       }
 
       return flux;
