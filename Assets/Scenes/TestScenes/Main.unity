@@ -525,7 +525,7 @@ MonoBehaviour:
   soundFeed: 100
   beatSubbands: 30
   beatSensitivity: 1.5
-  thresholdSize: -1
+  thresholdSize: 20
   thresholdMultiplier: 1.5
 --- !u!82 &1495458486
 AudioSource:
@@ -536,7 +536,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: ca3722343d329c641917ea09a7d84c83, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 3d896b17ed4b8ba459bfc57deb430181, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
