@@ -8,11 +8,11 @@ namespace SpaceBeat.Sound
   {
     public SoundParser m_soundParser;
 
-    private float    m_thresholdMultiplier;
+    private float m_thresholdMultiplier;
     private double[] m_threshold;
     private double[] m_peaks;
-    private double   m_sumOfFluxThresholds;
-    private int      m_thresholdSize;
+    private double m_sumOfFluxThresholds;
+    private int m_thresholdSize;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="SpaceBeat.Sound.MusicAnalyzer"/> class.
@@ -76,7 +76,7 @@ namespace SpaceBeat.Sound
       for (int i = 0; i < m_soundParser.TotalSamples; i++)
       {
         int start = Math.Max(0, i - m_thresholdSize / 2);
-        int end   = Math.Min(m_soundParser.SpectralFlux.Length - 1, i + m_thresholdSize / 2);
+        int end = Math.Min(m_soundParser.SpectralFlux.Length - 1, i + m_thresholdSize / 2);
 
         double mean = 0;
         for (int j = start; j <= end; j++)
@@ -96,7 +96,13 @@ namespace SpaceBeat.Sound
       double[] prunnedSpectralFlux = new double[m_threshold.Length];
 
       for (int i = 0; i < m_threshold.Length; i++)
-        prunnedSpectralFlux[i] = Math.Max(0, m_soundParser.SpectralFlux[i] - m_threshold[i]);
+      {
+        if (m_threshold[i] <= m_soundParser.SpectralFlux[i])
+          prunnedSpectralFlux[i] = m_soundParser.SpectralFlux[i] - m_threshold[i];
+        else
+          prunnedSpectralFlux[i] = 0;
+
+      }
 
       for (int i = 0; i < prunnedSpectralFlux.Length - 1; i++)
       {
