@@ -9,6 +9,8 @@ public class TestPlayer : MonoBehaviour
   // Config
   //
 
+  public Canvas LoadingScreen;
+
   public float speed = 10.0F;
   public float rotationSpeed = 100.0F;
 
@@ -52,10 +54,13 @@ public class TestPlayer : MonoBehaviour
         thresholdSize,
         thresholdMultiplier
       );
-    
+
     // todo make loading screen or progress bar and wrap calls once per update
+    LoadingScreen.enabled = true;
     while (!analyzer.Analyze())
-      ;
+      ; // make fancy rotation animation
+
+    LoadingScreen.enabled = false;
 
     // debug
     var beats = analyzer.Beats;
@@ -68,10 +73,9 @@ public class TestPlayer : MonoBehaviour
   // Update is called once per frame
   void Update()
   {
-    audio.Pause();
+    //audio.Pause();
 
     var time = audio.timeSamples / sampleSize;
-    //var delta = Mathf.Max(0, time - lastTime);
 
     //var beats = analyzer.Beats;
     var thresholds = analyzer.Thresholds;
@@ -107,6 +111,6 @@ public class TestPlayer : MonoBehaviour
     //  " peaks " + peaks[time] + "\n"
     //  );
 
-    audio.UnPause();
+    //audio.UnPause();
   }
 }
