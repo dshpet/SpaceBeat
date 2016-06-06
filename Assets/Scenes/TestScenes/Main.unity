@@ -127,6 +127,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b00e1629fa1a95b439acedd1e41676ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  LoadingScreen: {fileID: 1182678999}
   speed: 10
   rotationSpeed: 1000
   sampleSize: 1024
@@ -210,6 +211,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b00e1629fa1a95b439acedd1e41676ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  LoadingScreen: {fileID: 1182678999}
   speed: 10
   rotationSpeed: 1000
   sampleSize: 1024
@@ -373,7 +375,7 @@ AudioListener:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 539144490}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!92 &539144493
 Behaviour:
   m_ObjectHideFlags: 0
@@ -596,6 +598,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b00e1629fa1a95b439acedd1e41676ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  LoadingScreen: {fileID: 1182678999}
   speed: 10
   rotationSpeed: 1000
   sampleSize: 1024
@@ -796,7 +799,7 @@ AudioSource:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1260795784}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: a1e9cb9eb297f364a998c1e126f2ea39, type: 3}
@@ -2542,6 +2545,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b00e1629fa1a95b439acedd1e41676ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  LoadingScreen: {fileID: 1182678999}
   speed: 10
   rotationSpeed: 1000
   sampleSize: 1024
@@ -2610,7 +2614,7 @@ GameObject:
   - 81: {fileID: 1495458487}
   - 82: {fileID: 1495458486}
   m_Layer: 0
-  m_Name: TestPlayer
+  m_Name: MainObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2689,6 +2693,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b00e1629fa1a95b439acedd1e41676ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  LoadingScreen: {fileID: 1182678999}
   speed: 10
   rotationSpeed: 1000
   sampleSize: 1024
@@ -2820,6 +2825,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b00e1629fa1a95b439acedd1e41676ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  LoadingScreen: {fileID: 1182678999}
   speed: 10
   rotationSpeed: 1000
   sampleSize: 1024
@@ -2903,6 +2909,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b00e1629fa1a95b439acedd1e41676ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  LoadingScreen: {fileID: 1182678999}
   speed: 10
   rotationSpeed: 1000
   sampleSize: 1024
@@ -3002,6 +3009,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b00e1629fa1a95b439acedd1e41676ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  LoadingScreen: {fileID: 1182678999}
   speed: 10
   rotationSpeed: 1000
   sampleSize: 1024
@@ -3186,7 +3194,7 @@ AudioSource:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1594161123}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: a1e9cb9eb297f364a998c1e126f2ea39, type: 3}
@@ -3461,6 +3469,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b00e1629fa1a95b439acedd1e41676ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  LoadingScreen: {fileID: 1182678999}
   speed: 10
   rotationSpeed: 1000
   sampleSize: 1024
@@ -3556,6 +3565,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b00e1629fa1a95b439acedd1e41676ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  LoadingScreen: {fileID: 1182678999}
   speed: 10
   rotationSpeed: 1000
   sampleSize: 1024
@@ -3651,6 +3661,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b00e1629fa1a95b439acedd1e41676ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  LoadingScreen: {fileID: 1182678999}
   speed: 10
   rotationSpeed: 1000
   sampleSize: 1024
@@ -3746,6 +3757,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b00e1629fa1a95b439acedd1e41676ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  LoadingScreen: {fileID: 1182678999}
   speed: 10
   rotationSpeed: 1000
   sampleSize: 1024

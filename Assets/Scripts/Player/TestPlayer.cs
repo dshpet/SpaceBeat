@@ -2,6 +2,7 @@
 
 using SpaceBeat.Sound;
 using SpaceBeat.Objects3D;
+using System;
 
 public class TestPlayer : MonoBehaviour
 {
@@ -9,25 +10,14 @@ public class TestPlayer : MonoBehaviour
   // Config
   //
 
-  public Canvas LoadingScreen;
-
-  public float speed = 10.0F;
-  public float rotationSpeed = 100.0F;
-
-  // analyzer params
-  public int    sampleSize          = 1024;
-  public int    soundFeed           = 100;
-  public int    beatSubbands        = 30;
-  public double beatSensitivity     = 1.5;
-  public int    thresholdSize       = 20;
-  public float  thresholdMultiplier = 1.5f;
-
   //
   // Members
   //
 
   private MusicAnalyzer analyzer;
   private new AudioSource audio;
+  
+  private int sampleSize;
 
   private int lastTime;
   private int verticalDirection;
@@ -42,39 +32,17 @@ public class TestPlayer : MonoBehaviour
     verticalDirection = 1;
     lastTime = 0;
 
-    audio = GetComponent<AudioSource>();
-    audio.Stop();
+    var mainObject = GameObject.Find("MainObject");
+    var script = mainObject.GetComponent<MainTestPlayer>();
 
-    analyzer = new MusicAnalyzer(
-        audio.clip,
-        sampleSize,
-        soundFeed,
-        beatSubbands,
-        beatSensitivity,
-        thresholdSize,
-        thresholdMultiplier
-      );
-
-    // todo make loading screen or progress bar and wrap calls once per update
-    LoadingScreen.enabled = true;
-    while (!analyzer.Analyze())
-      ; // make fancy rotation animation
-
-    LoadingScreen.enabled = false;
-
-    // debug
-    var beats = analyzer.Beats;
-    var detectedBeats = analyzer.m_soundParser.DetectedBeats;
-    var thresholds = analyzer.Thresholds;
-
-    audio.Play();
+    analyzer = script.analyzer;
+    audio = script.audio;
+    sampleSize = script.sampleSize;
   }
 
   // Update is called once per frame
   void Update()
   {
-    //audio.Pause();
-
     var time = audio.timeSamples / sampleSize;
 
     //var beats = analyzer.Beats;
@@ -84,33 +52,15 @@ public class TestPlayer : MonoBehaviour
 
     var detectedBeats = analyzer.m_soundParser.DetectedBeats;
     for (var i = lastTime; i <= time; i++) // todo count first and then change one time
-      transform.Translate(0, verticalDirection * (float) (peaks[i] > 0 ? 1 :  0), (float) (detectedBeats[i] * speedFactor * Time.deltaTime));
+      transform.Translate(
+          0, 
+          Math.Max(verticalDirection * (float) (peaks[i]), 10), 
+          Math.Max((float) (peaks[i] * speedFactor * Time.deltaTime), 10)
+        );
 
     verticalDirection = -verticalDirection;
-    /*
-    for (int i = 0; i < beatSubbands; i++)
-    {
-      var b = beats[time, i];
 
-      if (b != 0)
-      {
-        transform.Translate(0, 0, (float)b * 50 * Time.deltaTime);
-        Debug.Log("!!BEAT");
-        return;
-      }
-
-    }
-    */
 
     lastTime = time;
-
-    //Debug.Log(
-    //  time + 
-    //  " beats [" + beats[time, 0] + ", " + beats[time, 1] + ", " + beats[time, 2] + "\n" +
-    //  " thresholds " + thresholds[time] + "\n" +
-    //  " peaks " + peaks[time] + "\n"
-    //  );
-
-    //audio.UnPause();
   }
 }
