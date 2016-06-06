@@ -127,15 +127,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b00e1629fa1a95b439acedd1e41676ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LoadingScreen: {fileID: 1182678999}
-  speed: 10
-  rotationSpeed: 1000
-  sampleSize: 1024
-  soundFeed: 100
-  beatSubbands: 30
-  beatSensitivity: 1.5
-  thresholdSize: 20
-  thresholdMultiplier: 1.5
 --- !u!23 &358519474
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -211,15 +202,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b00e1629fa1a95b439acedd1e41676ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LoadingScreen: {fileID: 1182678999}
-  speed: 10
-  rotationSpeed: 1000
-  sampleSize: 1024
-  soundFeed: 100
-  beatSubbands: 30
-  beatSensitivity: 1.5
-  thresholdSize: 20
-  thresholdMultiplier: 1.5
 --- !u!23 &396399936
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -598,15 +580,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b00e1629fa1a95b439acedd1e41676ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LoadingScreen: {fileID: 1182678999}
-  speed: 10
-  rotationSpeed: 1000
-  sampleSize: 1024
-  soundFeed: 100
-  beatSubbands: 30
-  beatSensitivity: 1.5
-  thresholdSize: 20
-  thresholdMultiplier: 1.5
 --- !u!23 &1035529252
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -2545,15 +2518,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b00e1629fa1a95b439acedd1e41676ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LoadingScreen: {fileID: 1182678999}
-  speed: 10
-  rotationSpeed: 1000
-  sampleSize: 1024
-  soundFeed: 100
-  beatSubbands: 30
-  beatSensitivity: 1.5
-  thresholdSize: 20
-  thresholdMultiplier: 1.5
 --- !u!23 &1273216998
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -2610,9 +2574,9 @@ GameObject:
   - 33: {fileID: 1495458483}
   - 65: {fileID: 1495458482}
   - 23: {fileID: 1495458481}
-  - 114: {fileID: 1495458485}
   - 81: {fileID: 1495458487}
   - 82: {fileID: 1495458486}
+  - 114: {fileID: 1495458485}
   m_Layer: 0
   m_Name: MainObject
   m_TagString: Untagged
@@ -2690,18 +2654,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 1495458480}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b00e1629fa1a95b439acedd1e41676ce, type: 3}
+  m_Script: {fileID: 11500000, guid: d1f0dd362f6661a47b915a52f73933ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   LoadingScreen: {fileID: 1182678999}
-  speed: 10
-  rotationSpeed: 1000
   sampleSize: 1024
   soundFeed: 100
   beatSubbands: 30
   beatSensitivity: 1.5
   thresholdSize: 20
   thresholdMultiplier: 1.5
+  audio: {fileID: 0}
 --- !u!82 &1495458486
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2715,7 +2678,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   Priority: 128
@@ -2825,15 +2788,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b00e1629fa1a95b439acedd1e41676ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LoadingScreen: {fileID: 1182678999}
-  speed: 10
-  rotationSpeed: 1000
-  sampleSize: 1024
-  soundFeed: 100
-  beatSubbands: 30
-  beatSensitivity: 1.5
-  thresholdSize: 20
-  thresholdMultiplier: 1.5
 --- !u!23 &1495624636
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -2909,15 +2863,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b00e1629fa1a95b439acedd1e41676ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LoadingScreen: {fileID: 1182678999}
-  speed: 10
-  rotationSpeed: 1000
-  sampleSize: 1024
-  soundFeed: 100
-  beatSubbands: 30
-  beatSensitivity: 1.5
-  thresholdSize: 20
-  thresholdMultiplier: 1.5
 --- !u!23 &1515705818
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -3009,15 +2954,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b00e1629fa1a95b439acedd1e41676ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LoadingScreen: {fileID: 1182678999}
-  speed: 10
-  rotationSpeed: 1000
-  sampleSize: 1024
-  soundFeed: 100
-  beatSubbands: 30
-  beatSensitivity: 1.5
-  thresholdSize: 20
-  thresholdMultiplier: 1.5
 --- !u!23 &1562389967
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -3469,15 +3405,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b00e1629fa1a95b439acedd1e41676ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LoadingScreen: {fileID: 1182678999}
-  speed: 10
-  rotationSpeed: 1000
-  sampleSize: 1024
-  soundFeed: 100
-  beatSubbands: 30
-  beatSensitivity: 1.5
-  thresholdSize: 20
-  thresholdMultiplier: 1.5
 --- !u!23 &1741956408
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -3565,15 +3492,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b00e1629fa1a95b439acedd1e41676ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LoadingScreen: {fileID: 1182678999}
-  speed: 10
-  rotationSpeed: 1000
-  sampleSize: 1024
-  soundFeed: 100
-  beatSubbands: 30
-  beatSensitivity: 1.5
-  thresholdSize: 20
-  thresholdMultiplier: 1.5
 --- !u!23 &1811042502
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -3661,15 +3579,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b00e1629fa1a95b439acedd1e41676ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LoadingScreen: {fileID: 1182678999}
-  speed: 10
-  rotationSpeed: 1000
-  sampleSize: 1024
-  soundFeed: 100
-  beatSubbands: 30
-  beatSensitivity: 1.5
-  thresholdSize: 20
-  thresholdMultiplier: 1.5
 --- !u!23 &1841050323
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -3757,15 +3666,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b00e1629fa1a95b439acedd1e41676ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LoadingScreen: {fileID: 1182678999}
-  speed: 10
-  rotationSpeed: 1000
-  sampleSize: 1024
-  soundFeed: 100
-  beatSubbands: 30
-  beatSensitivity: 1.5
-  thresholdSize: 20
-  thresholdMultiplier: 1.5
 --- !u!23 &1878894031
 MeshRenderer:
   m_ObjectHideFlags: 0
