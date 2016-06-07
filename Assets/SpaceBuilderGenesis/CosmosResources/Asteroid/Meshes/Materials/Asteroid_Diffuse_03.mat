@@ -1,0 +1,137 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: Asteroid_Diffuse_03
+  m_Shader: {fileID: 4800000, guid: 92fdfb3c8891dba47944fdbc670c3764, type: 3}
+  m_ShaderKeywords: _ONLYSHADOW_ON
+  m_LightmapFlags: 5
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  m_SavedProperties:
+    serializedVersion: 2
+    m_TexEnvs:
+      data:
+        first:
+          name: _MainTex
+        second:
+          m_Texture: {fileID: 2800000, guid: 65118162ef0972e449d179c81f25faa1, type: 3}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _BumpMap
+        second:
+          m_Texture: {fileID: 2800000, guid: 2f19aa52fed4c6745abbeff0100f9adb, type: 3}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _NormalMap
+        second:
+          m_Texture: {fileID: 2800000, guid: 2f19aa52fed4c6745abbeff0100f9adb, type: 3}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _EmissionMap
+        second:
+          m_Texture: {fileID: 2800000, guid: be4ca8c61e4085048b38f9febb94dbc9, type: 3}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _Illum
+        second:
+          m_Texture: {fileID: 2800000, guid: be4ca8c61e4085048b38f9febb94dbc9, type: 3}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _DiffuseMap
+        second:
+          m_Texture: {fileID: 2800000, guid: 65118162ef0972e449d179c81f25faa1, type: 3}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+    m_Floats:
+      data:
+        first:
+          name: _Shininess
+        second: 1
+      data:
+        first:
+          name: _FullBright
+        second: 0
+      data:
+        first:
+          name: _EnableAmbient
+        second: 0
+      data:
+        first:
+          name: _DiffusePower
+        second: 0.5
+      data:
+        first:
+          name: _AtmPower
+        second: 1.0357143
+      data:
+        first:
+          name: _AtmSize
+        second: 0.25
+      data:
+        first:
+          name: _Intensity
+        second: 0.39642859
+      data:
+        first:
+          name: _EmissionFallOff
+        second: 0
+      data:
+        first:
+          name: _AtmFullBright
+        second: 0
+      data:
+        first:
+          name: _OnlyShadow
+        second: 1
+      data:
+        first:
+          name: _Pulsation
+        second: 0
+      data:
+        first:
+          name: _MinIntensity
+        second: 3.392857
+      data:
+        first:
+          name: _MaxIntensity
+        second: 4.464286
+      data:
+        first:
+          name: _PulsationSpeed
+        second: 4.214286
+      data:
+        first:
+          name: _EmissionLM
+        second: 0
+    m_Colors:
+      data:
+        first:
+          name: _EmissionColor
+        second: {r: 1, g: 1, b: 1, a: 1}
+      data:
+        first:
+          name: _Color
+        second: {r: 0.8088235, g: 0.8088235, b: 0.8088235, a: 1}
+      data:
+        first:
+          name: _SpecColor
+        second: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+      data:
+        first:
+          name: _AtmColor
+        second: {r: 0.40392157, g: 0.043137256, b: 0.011764706, a: 1}

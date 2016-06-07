@@ -1,0 +1,111 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: vulcanoPlanet
+  m_Shader: {fileID: 4800000, guid: 92fdfb3c8891dba47944fdbc670c3764, type: 3}
+  m_ShaderKeywords: _ONLYSHADOW_ON _PULSATION_ON
+  m_LightmapFlags: 5
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  m_SavedProperties:
+    serializedVersion: 2
+    m_TexEnvs:
+      data:
+        first:
+          name: _MainTex
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _NormalMap
+        second:
+          m_Texture: {fileID: 2800000, guid: 5547d0635f8325c4886c0b8b31e2244f, type: 3}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _EmissionMap
+        second:
+          m_Texture: {fileID: 2800000, guid: 9cde1e25d3c15f84388a435a440ff65d, type: 3}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _DiffuseMap
+        second:
+          m_Texture: {fileID: 2800000, guid: 99a360a05057c8744899554658cdf61e, type: 3}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+    m_Floats:
+      data:
+        first:
+          name: _FullBright
+        second: 0
+      data:
+        first:
+          name: _EnableAmbient
+        second: 0
+      data:
+        first:
+          name: _DiffusePower
+        second: 0.8928572
+      data:
+        first:
+          name: _AtmPower
+        second: 3.125
+      data:
+        first:
+          name: _AtmSize
+        second: 0.5
+      data:
+        first:
+          name: _Intensity
+        second: 0.2
+      data:
+        first:
+          name: _EmissionFallOff
+        second: 0
+      data:
+        first:
+          name: _AtmFullBright
+        second: 0
+      data:
+        first:
+          name: _OnlyShadow
+        second: 1
+      data:
+        first:
+          name: _Pulsation
+        second: 1
+      data:
+        first:
+          name: _MinIntensity
+        second: 1.6964285
+      data:
+        first:
+          name: _MaxIntensity
+        second: 2.232143
+      data:
+        first:
+          name: _PulsationSpeed
+        second: 1
+    m_Colors:
+      data:
+        first:
+          name: _EmissionColor
+        second: {r: 1, g: 1, b: 1, a: 1}
+      data:
+        first:
+          name: _Color
+        second: {r: 1, g: 1, b: 1, a: 1}
+      data:
+        first:
+          name: _AtmColor
+        second: {r: 0.24264705, g: 0.053204335, b: 0.0017841712, a: 1}
