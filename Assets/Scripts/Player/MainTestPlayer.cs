@@ -27,7 +27,6 @@ public class MainTestPlayer : MonoBehaviour
   public new AudioSource audio;
 
   private int lastTime;
-  private int verticalDirection;
 
   //
   // Functions
@@ -36,7 +35,6 @@ public class MainTestPlayer : MonoBehaviour
   // Use this for initialization
   void Awake()
   {
-    verticalDirection = 1;
     lastTime = 0;
 
     audio = GetComponent<AudioSource>();
@@ -52,13 +50,8 @@ public class MainTestPlayer : MonoBehaviour
         thresholdMultiplier
       );
 
-    // todo make loading screen or progress bar and wrap calls once per update
-    LoadingScreen.enabled = true;
-
     while (!analyzer.Analyze())
       ; // make fancy rotation animation
-
-    LoadingScreen.enabled = false;
 
     // debug
     var beats = analyzer.Beats;
@@ -80,9 +73,15 @@ public class MainTestPlayer : MonoBehaviour
 
     var detectedBeats = analyzer.m_soundParser.DetectedBeats;
     for (var i = lastTime; i <= time; i++) // todo count first and then change one time
-      transform.Translate(0, verticalDirection * (float)(peaks[i]), (float)(peaks[i] * speedFactor * Time.deltaTime));
+    {
+      // animation on peak
 
-    verticalDirection = -verticalDirection;
+      // particles emit on peak
+
+      // asteroids movement on peak
+
+      // change light color on peak
+    }
 
     lastTime = time;
   }
